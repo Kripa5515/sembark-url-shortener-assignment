@@ -40,14 +40,16 @@ class InvitationController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $isInvited = null;
         if ($user->isSuperAdmin()) {
             $invitations = Invitation::with('company')->latest()->get();
             
         } else {
+            $isInvited = Invitation::where('created_for', $user->id)->first();
             $invitations = Invitation::where('company_id', $user->company_id)->latest()->get() ?? new Collection();
            
         }
-        return view('invitations.index', compact('invitations'));
+        return view('invitations.index', compact('invitations', 'isInvited'));
     }
 
     public function create()
@@ -91,11 +93,13 @@ class InvitationController extends Controller
         if (!$companyId) {
             return back()->withErrors(['company_id' => 'Company selection is required.']);
         }
+           
         Invitation::create([
             'company_id' => $companyId,
             'email' => $request->email,
             'role' => $request->role,
             'created_by' => $user->id,
+            'created_for' => getUserIdByEmail($request->email),
             'token' => Str::uuid(),
             'expires_at' => now()->addDays(7)
         ]);

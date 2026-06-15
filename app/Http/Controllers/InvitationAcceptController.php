@@ -19,19 +19,21 @@ class InvitationAcceptController extends Controller
     public function store(Request $request, string $token )
     {
         $invitation = Invitation::where('token', $token)->where('expires_at', '>', now() )->firstOrFail();
-        $request->validate([
-            'name' => ['required','string','max:255'],
-            'password' => ['required','min:8']
-        ]); 
+        
 
-        $role = Role::where('name',$invitation->role)->first();
+        // $role = Role::where('name',$invitation->role)->first();
 
-        User::create([
-            'company_id' =>$invitation->company_id,
-            'role_id' =>$role->id,
-            'name' =>$request->name,
-            'email' =>$invitation->email,
-            'password' =>Hash::make($request->password)
+        // User::create([
+        //     'company_id' =>$invitation->company_id,
+        //     'role_id' =>$role->id,
+        //     'name' =>$request->name,
+        //     'email' =>$invitation->email,
+        //     'password' =>Hash::make($request->password)
+        // ]);
+
+        User::where('email', $invitation->email)->update([
+            'company_id' => $invitation->company_id,
+           
         ]);
 
         $invitation->delete();

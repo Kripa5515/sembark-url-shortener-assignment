@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-#[Fillable([ 'company_id', 'email', 'role', 'token', 'expires_at', 'created_by' ])]
+#[Fillable([ 'company_id', 'email', 'role', 'token', 'expires_at', 'created_by','created_for' ])]
 
 class Invitation extends Model
 {

@@ -35,12 +35,15 @@
                         </x-nav-link>
                     @endif              
 
-                    @if( Auth::user()->isSuperAdmin() || Auth::user()->isAdmin() )
+                    @if( Auth::user()->isSuperAdmin() || Auth::user()->isAdmin() || Auth::user()->isMember())
+                        @if(!isUserMemberAndAssociatedWithCompany())
+
                         <x-nav-link
                             :href="route('invitations.index')"
                             :active="request()->routeIs('invitations.*')">
                             Invitations
                         </x-nav-link>
+                        @endif
                     @endif
 
                     @if( Auth::user()->isSuperAdmin() || Auth::user()->isAdmin() || Auth::user()->isMember())

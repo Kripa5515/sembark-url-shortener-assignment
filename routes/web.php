@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::middleware(['role:SuperAdmin,Admin'])->group(function () {
+    Route::middleware(['role:SuperAdmin,Admin,Member'])->group(function () {
         Route::get('/invitations-list', [InvitationController::class, 'index'])->name('invitations.index');
         Route::get('/invitations/create', [InvitationController::class, 'create'])->name('invitations.create');
         Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');

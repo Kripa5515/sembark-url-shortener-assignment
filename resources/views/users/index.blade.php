@@ -23,6 +23,9 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __('Email') }}
                                 </th>
+                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ __('Company Name') }}
+                                </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">{{ __('Actions') }}</span>
                                 </th>
@@ -32,13 +35,13 @@
                             @forelse($getAllUsers as $user)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ $user->name }}
+                                        {{ ucwords($user->name) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $user->email }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <span class="text-gray-400">---</span>
+                                        <span class="{{ $user->company_id > 0 ? 'text-green-600' : 'text-red-600' }}">{{ $user->company_id > 0 ? ucwords(getCompanyNameById($user->company_id)) : 'Company Not Assigin' }}</span>
                                     </td>
                                 </tr>
                             @empty
